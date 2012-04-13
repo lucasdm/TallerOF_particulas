@@ -1,0 +1,15 @@
+*.app
+build/
+Project.xcconfig
+*.xccodeproj/
+openFrameworks-Info.plist
+
+tallerOF_025.xcodeproj/lucasdm.mode1v3
+
+tallerOF_025.xcodeproj/lucasdm.pbxuser
+
+tallerOF_025.xcodeproj/project.pbxproj
+
+tallerOF_025.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+
+tallerOF_025.xcodeproj/xcshareddata/xcschemes/tallerOF_025.xcscheme
