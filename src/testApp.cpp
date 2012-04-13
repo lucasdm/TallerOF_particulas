@@ -5,23 +5,45 @@ void testApp::setup(){
 	ofSetCircleResolution(200);
 	ofEnableSmoothing();
 	ofSetVerticalSync(true);	
-	ofHideCursor();	
-	ofSetFullscreen(true);	
-	for(int i = 0; i < TOTAL; i++){
-		p[i].pos.set(ofRandom(ofGetWindowWidth()),ofRandom(ofGetWindowHeight()));
+	//ofHideCursor();	
+	//ofSetFullscreen(true);	
+	
+    for(int i = 0; i < TOTAL; i++){
+        Particula nueva = Particula( ofRandom(ofGetWindowWidth()),ofRandom(ofGetWindowHeight()) );
+        
+        particulas.push_back(nueva);
 	}	
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-	ofSetWindowTitle("fps: " + ofToString(ofGetFrameRate()));	
-	for(int i = 0; i < TOTAL; i++){
-		p[i].agregarFuerza(ofVec2f(0,0.0098));
-		p[i].update();
-		
-		if (p[i].pasoElBorde()){
-			p[i] = Particula();
-			p[i].pos.set(mouseX,mouseY);
+	ofSetWindowTitle("fps: " + ofToString(ofGetFrameRate()));
+	
+    int totalDeParticulas = particulas.size();
+    
+	for(int i = 0; i < totalDeParticulas; i++){
+		particulas[i].agregarFuerza(ofVec2f(0,0.0098));
+		particulas[i].update();
+
+        
+        for(int j = 0; j < totalDeParticulas; j++){
+            if ( j != i ){
+                if (particulas[i].tocandoCon(particulas[j])){
+                    Particula nueva = Particula( particulas[i], particulas[j] );
+                    
+                    particulas.push_back(nueva);
+                }
+                
+            }
+        }
+	}
+    
+    for(int i = particulas.size(); i >= 0 ; i--){
+        if ( !particulas[i].estaViva() ){
+            particulas.erase( particulas.begin() + i ); // Como si fuera un 0 + i
+        }
+        if (particulas[i].pasoElBorde()){
+			particulas.erase( particulas.begin() + i ); // Como si fuera un 0 + i
 		}
 	}
 }
@@ -30,8 +52,8 @@ void testApp::update(){
 void testApp::draw(){
 	ofBackground(0);
 
-	for(int i = 0; i < TOTAL; i++){
-		p[i].draw();
+	for(int i = 0; i < particulas.size() ; i++){
+		particulas[i].draw();
 	}
 }
 
