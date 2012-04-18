@@ -4,7 +4,7 @@
 
 #include "Particula.h"
 
-#define TOTAL 100
+#define TOTAL 500
 
 class testApp : public ofBaseApp{
 public:
